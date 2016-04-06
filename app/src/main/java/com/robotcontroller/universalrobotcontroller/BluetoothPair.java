@@ -1,5 +1,8 @@
 package com.robotcontroller.universalrobotcontroller;
 
+import android.app.AlertDialog;
+import android.bluetooth.BluetoothAdapter;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,8 +11,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.ListView;
+
+import java.util.Set;
 
 public class BluetoothPair extends AppCompatActivity {
+
+    private BluetoothAdapter BTAdapter = null;
+    private Set pairedDevices;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,14 +28,23 @@ public class BluetoothPair extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        //getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+
+        BTAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        if(BTAdapter == null) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Not Compatable")
+                    .setMessage("Your device does not support Bluetooth")
+                    .setPositiveButton("Exit", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            System.exit(0);
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
     }
 
     @Override
