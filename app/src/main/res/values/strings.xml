@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Universal Robot Controller</string>
+    <string name="action_settings">Settings</string>
+</resources>
