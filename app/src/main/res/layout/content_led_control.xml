@@ -43,19 +43,66 @@
     <SeekBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/brightnessAmount"
+        android:id="@+id/brightnessAmountBlue"
         android:indeterminate="false"
+        android:layout_marginBottom="99dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="102dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:max="255" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Brightness Level"
-        android:id="@+id/brightLevel"
-        android:layout_marginBottom="42dp"
-        android:layout_above="@+id/brightnessAmount"
+        android:text="Brightness Level Blue"
+        android:id="@+id/brightLevelBlue"
+        android:layout_above="@+id/brightnessAmountBlue"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/brightnessAmountGreen"
+        android:indeterminate="false"
+        android:layout_marginBottom="32dp"
+        android:max="255"
+        android:layout_above="@+id/brightLevelBlue"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Brightness Level Green"
+        android:id="@+id/brightLevelGreen"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/brightnessAmountGreen"
+        android:layout_centerHorizontal="true" />
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/brightnessAmountRed"
+        android:indeterminate="false"
+        android:layout_marginBottom="34dp"
+        android:max="255"
+        android:layout_above="@+id/brightLevelGreen"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Brightness Level Red"
+        android:id="@+id/brightLevelRed"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/brightnessAmountRed"
+        android:layout_alignParentLeft="true" />
 </RelativeLayout>

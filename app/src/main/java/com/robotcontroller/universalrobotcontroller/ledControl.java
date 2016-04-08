@@ -7,8 +7,6 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -23,14 +21,18 @@ import java.util.UUID;
 public class ledControl extends AppCompatActivity {
 
     Button ledOn, ledOff, bluetoothDisconnect;
-    SeekBar brightnessAmount;
+    SeekBar brightnessAmountBlue;
+    SeekBar brightnessAmountGreen;
+    SeekBar brightnessAmountRed;
     String address = null;
     private ProgressDialog progress;
     BluetoothAdapter BTAdapter = null;
     BluetoothSocket btSocket = null;
     private boolean isBtConnected = false;
     static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-    TextView brightLevel;
+    TextView brightLevelBlue;
+    TextView brightLevelGreen;
+    TextView brightLevelRed;
 
 
 
@@ -50,44 +52,115 @@ public class ledControl extends AppCompatActivity {
 //call the widgtes
         ledOn = (Button) findViewById(R.id.ledON);
         ledOff = (Button) findViewById(R.id.ledOff);
-        bluetoothDisconnect = (Button) findViewById(R.id.brightnessAmount);
-        brightnessAmount = (SeekBar) findViewById(R.id.brightnessAmount);
+        bluetoothDisconnect = (Button) findViewById(R.id.bluetoothDisconnect);
+        //Initilize Blue Led
+        brightnessAmountBlue = (SeekBar) findViewById(R.id.brightnessAmountBlue);
+        brightLevelBlue = (TextView) findViewById(R.id.brightLevelBlue);
+        //Initilize Green Led
+        brightnessAmountGreen = (SeekBar) findViewById(R.id.brightnessAmountGreen);
+        brightLevelGreen = (TextView) findViewById(R.id.brightLevelGreen);
+        //Initlize Red Led
+        brightnessAmountRed = (SeekBar) findViewById(R.id.brightnessAmountRed);
+        brightLevelRed = (TextView) findViewById(R.id.brightLevelRed);
+
+
+        new ConnectBT().execute();
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //commands to be sent to bluetooth
+        ledOn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                turnOnLed();      //method to turn on
+            }
+        });
+
+        ledOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                turnOffLed();   //method to turn off
+            }
+        });
+
+        bluetoothDisconnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Disconnect(); //close connection
+            }
+        });
 
 
+        //Control slider of blue LED
+        brightnessAmountBlue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekbar, int progress, boolean fromUser) {
+                if (fromUser == true) {
+                    brightLevelBlue.setText(String.valueOf(progress));
+                    try {
+                        btSocket.getOutputStream().write(String.valueOf(progress).getBytes());
+                    } catch (IOException e) {
+                    }
+                }
+            }
 
+            @Override
+            public void onStartTrackingTouch(SeekBar seekbar) {
+            }
 
-        brightnessAmount.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
-          {
-              @Override
-              public void onProgressChanged(SeekBar seekbar, int progress,
-                                            boolean fromUser) {
-                  if (fromUser == true) {
-                      brightLevel.setText(String.valueOf(progress));
-                      try {
-                          btSocket.getOutputStream().write(String.valueOf(progress).getBytes());
-                      } catch (IOException e) {
-                      }
-                  }
-              }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekbar) {
+            }
+        }
+        );
 
-              @Override
-              public void onStartTrackingTouch(SeekBar seekbar) {
+        //Control slider of green LED
+        brightnessAmountGreen.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+             @Override
+             public void onProgressChanged(SeekBar seekbar, int progress, boolean fromUser) {
+                 if (fromUser == true) {
+                     brightLevelGreen.setText(String.valueOf(progress));
+                     try {
+                         btSocket.getOutputStream().write(String.valueOf(progress).getBytes());
+                     } catch (IOException e) {
+                     }
+                 }
+             }
 
-              }
+             @Override
+             public void onStartTrackingTouch(SeekBar seekbar) {
+             }
 
-              @Override
-              public void onStopTrackingTouch(SeekBar seekbar) {
-              }
-          }
+             @Override
+             public void onStopTrackingTouch(SeekBar seekbar) {
+             }
+         }
+        );
 
+        //Control slider of red LED
+        brightnessAmountRed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+           @Override
+           public void onProgressChanged(SeekBar seekbar, int progress, boolean fromUser) {
+               if (fromUser == true) {
+                   brightLevelRed.setText(String.valueOf(progress));
+                   try {
+                       btSocket.getOutputStream().write(String.valueOf(progress).getBytes());
+                   } catch (IOException e) {
+                   }
+               }
+           }
+
+           @Override
+           public void onStartTrackingTouch(SeekBar seekbar) {
+           }
+
+           @Override
+           public void onStopTrackingTouch(SeekBar seekbar) {
+           }
+       }
         );
     }
-
-
 
     private void Disconnect() {
         if (btSocket != null) { //If the btSocket is busy
@@ -124,16 +197,6 @@ public class ledControl extends AppCompatActivity {
     private void msg(String s) {
         Toast.makeText(getApplicationContext(),s, Toast.LENGTH_LONG).show();
     }
-
-
-
-
-
-
-
-
-
-
 
 
 
