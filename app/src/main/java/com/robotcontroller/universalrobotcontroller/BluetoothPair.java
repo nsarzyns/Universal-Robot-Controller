@@ -1,10 +1,12 @@
 package com.robotcontroller.universalrobotcontroller;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -28,6 +30,7 @@ public class BluetoothPair extends AppCompatActivity {
 
     private BluetoothAdapter BTAdapter = null;
     private Set<BluetoothDevice> pairedDevices;
+    public static String EXTRA_ADDRESS = "device_address";
 
     Button viewDevices;
     ListView deviceList;
@@ -97,11 +100,11 @@ public class BluetoothPair extends AppCompatActivity {
             String address = info.substring(info.length() - 17);
 
             //Start next activity
-            //Intent i = new Intent(BluetoothPair.this, ledControl.class);
+            Intent i = new Intent(BluetoothPair.this, ledControl.class);
 
             //Switch to ledControl activity
-          //  i.putExtra(EXTRA_ADDRESS, address);
-          //  startActivity(i);
+            i.putExtra(EXTRA_ADDRESS, address);
+            startActivity(i);
         }
     };
 
@@ -126,6 +129,9 @@ public class BluetoothPair extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
 
 
 
