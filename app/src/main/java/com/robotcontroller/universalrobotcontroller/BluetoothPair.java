@@ -129,10 +129,4 @@ public class BluetoothPair extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
-
-
-
-
 }

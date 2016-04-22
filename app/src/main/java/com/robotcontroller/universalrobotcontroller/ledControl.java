@@ -34,7 +34,7 @@ public class ledControl extends AppCompatActivity {
     TextView brightLevelGreen;
     TextView brightLevelRed;
 
-
+    Button toJoystick = (Button) findViewById(R.id.toJoyStick);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,23 +49,25 @@ public class ledControl extends AppCompatActivity {
 
 //view of the ledControl layout
         setContentView(R.layout.activity_led_control);
+
 //call the widgtes
         ledOn = (Button) findViewById(R.id.ledON);
         ledOff = (Button) findViewById(R.id.ledOff);
+
         bluetoothDisconnect = (Button) findViewById(R.id.bluetoothDisconnect);
         //Initilize Blue Led
         brightnessAmountBlue = (SeekBar) findViewById(R.id.brightnessAmountBlue);
         brightLevelBlue = (TextView) findViewById(R.id.brightLevelBlue);
+
         //Initilize Green Led
         brightnessAmountGreen = (SeekBar) findViewById(R.id.brightnessAmountGreen);
         brightLevelGreen = (TextView) findViewById(R.id.brightLevelGreen);
         //Initlize Red Led
+
         brightnessAmountRed = (SeekBar) findViewById(R.id.brightnessAmountRed);
         brightLevelRed = (TextView) findViewById(R.id.brightLevelRed);
 
-
         new ConnectBT().execute();
-
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -90,7 +92,6 @@ public class ledControl extends AppCompatActivity {
                 Disconnect(); //close connection
             }
         });
-
 
         //Control slider of blue LED
         brightnessAmountBlue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -160,6 +161,18 @@ public class ledControl extends AppCompatActivity {
            }
        }
         );
+
+
+
+        toJoystick.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                startActivity(new Intent(ledControl.this, JoyStickController.class));
+            }
+        });
+
+
+
+
     }
 
     private void Disconnect() {
@@ -173,6 +186,7 @@ public class ledControl extends AppCompatActivity {
         finish(); //return to the first layout}
 
     }
+
     private void turnOffLed() {
         if (btSocket != null) {
             try {
@@ -182,7 +196,6 @@ public class ledControl extends AppCompatActivity {
             }
         }
     }
-
 
     private void turnOnLed() {
         if (btSocket != null) {
@@ -197,9 +210,6 @@ public class ledControl extends AppCompatActivity {
     private void msg(String s) {
         Toast.makeText(getApplicationContext(),s, Toast.LENGTH_LONG).show();
     }
-
-
-
 
     private class ConnectBT extends AsyncTask<Void, Void, Void> { // UI thread
         private boolean ConnectSuccess = true;
@@ -239,11 +249,3 @@ public class ledControl extends AppCompatActivity {
             }
         }
     }
-
-
-
-
-
-
-
-
