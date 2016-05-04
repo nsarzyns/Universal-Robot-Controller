@@ -13,105 +13,129 @@
     tools:showIn="@layout/activity_led_control">
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LED ON"
         android:id="@+id/ledON"
-        android:layout_marginTop="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/bluetoothDisconnect"
-        android:layout_alignLeft="@+id/ledOff"
-        android:layout_alignStart="@+id/ledOff" />
+        android:layout_marginTop="29dp"
+        android:text="LED ON" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LED OFF"
         android:id="@+id/ledOff"
-        android:layout_marginTop="33dp"
-        android:layout_below="@+id/ledON"
-        android:layout_centerHorizontal="true" />
-
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Disconnect Bluetooth"
+        android:layout_alignEnd="@+id/toJoyStick"
+        android:layout_alignRight="@+id/toJoyStick"
+        android:layout_alignTop="@+id/ledON"
+        android:text="LED OFF" />
+
+    <Button
         android:id="@+id/bluetoothDisconnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:text="Disconnect Bluetooth" />
 
     <SeekBar
+        android:id="@+id/gripperHeightAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/brightnessAmountBlue"
-        android:indeterminate="false"
-        android:layout_marginBottom="99dp"
-        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/extendArmAmount"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignRight="@+id/extendArmAmount"
+        android:layout_below="@+id/gripperHeightControl"
+        android:layout_marginTop="20dp"
+        android:indeterminate="false"
+        android:max="180" />
+
+    <TextView
+        android:id="@+id/gripperHeightControl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/extendArmAmount"
+        android:layout_marginTop="27dp"
+        android:text="Gripper Height" />
+
+    <SeekBar
+        android:id="@+id/extendArmAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:max="255" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/armExtensionControl"
+        android:indeterminate="false"
+        android:max="180" />
 
     <TextView
+        android:id="@+id/armExtensionControl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Brightness Level Blue"
-        android:id="@+id/brightLevelBlue"
-        android:layout_above="@+id/brightnessAmountBlue"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:text="Extend Arm" />
 
     <SeekBar
+        android:id="@+id/gripperAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/brightnessAmountGreen"
-        android:indeterminate="false"
-        android:layout_marginBottom="32dp"
-        android:max="255"
-        android:layout_above="@+id/brightLevelBlue"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/gripperControl"
+        android:layout_marginTop="17dp"
+        android:indeterminate="false"
+        android:max="180" />
 
     <TextView
+        android:id="@+id/gripperControl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Brightness Level Green"
-        android:id="@+id/brightLevelGreen"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/brightnessAmountGreen"
-        android:layout_centerHorizontal="true" />
-
-    <SeekBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/brightnessAmountRed"
-        android:indeterminate="false"
-        android:layout_marginBottom="34dp"
-        android:max="255"
-        android:layout_above="@+id/brightLevelGreen"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Brightness Level Red"
-        android:id="@+id/brightLevelRed"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/brightnessAmountRed"
-        android:layout_alignParentLeft="true" />
+        android:layout_below="@+id/ledON"
+        android:layout_marginTop="47dp"
+        android:text="Gripper" />
 
     <Button
+        android:id="@+id/toJoyStick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="JoyStick"
-        android:id="@+id/toJoyStick"
+        android:layout_alignEnd="@+id/gripperAmount"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/brightnessAmountRed"
-        android:layout_alignEnd="@+id/brightnessAmountRed" />
+        android:layout_alignRight="@+id/gripperAmount"
+        android:text="JoyStick" />
+
+    <TextView
+        android:id="@+id/rotationControl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/gripperHeightAmount"
+        android:layout_marginTop="30dp"
+        android:text="Rotation" />
+
+    <SeekBar
+        android:id="@+id/rotationAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/rotationControl"
+        android:layout_marginTop="17dp"
+        android:indeterminate="false"
+        android:max="180" />
 </RelativeLayout>

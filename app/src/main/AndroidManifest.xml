@@ -33,11 +33,6 @@
                 android:value="com.robotcontroller.universalrobotcontroller.BluetoothPair" />
         </activity>
 
-        <activity
-            android:name=".ControllerControl"
-            android:label="@string/title_activity_controller_control"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
 
     </application>
 

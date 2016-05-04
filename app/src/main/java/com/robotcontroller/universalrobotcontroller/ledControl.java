@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -21,20 +22,23 @@ import java.util.UUID;
 public class ledControl extends AppCompatActivity {
 
     Button ledOn, ledOff, bluetoothDisconnect;
-    SeekBar brightnessAmountBlue;
-    SeekBar brightnessAmountGreen;
-    SeekBar brightnessAmountRed;
+    SeekBar gripperAmount;
+    SeekBar extendArmAmount;
+    SeekBar gripperHeightAmount;
+    SeekBar rotationAmount;
     String address = null;
     private ProgressDialog progress;
     BluetoothAdapter BTAdapter = null;
     BluetoothSocket btSocket = null;
     private boolean isBtConnected = false;
     static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-    TextView brightLevelBlue;
-    TextView brightLevelGreen;
-    TextView brightLevelRed;
+    TextView gripperControl;
+    TextView armExtensionControl;
+    TextView gripperHeightControl;
+    TextView rotationControl;
+    int p = 0;
 
-    Button toJoystick = (Button) findViewById(R.id.toJoyStick);
+    //Button toJoystick = (Button) findViewById(R.id.toJoyStick);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,17 +59,22 @@ public class ledControl extends AppCompatActivity {
         ledOff = (Button) findViewById(R.id.ledOff);
 
         bluetoothDisconnect = (Button) findViewById(R.id.bluetoothDisconnect);
-        //Initilize Blue Led
-        brightnessAmountBlue = (SeekBar) findViewById(R.id.brightnessAmountBlue);
-        brightLevelBlue = (TextView) findViewById(R.id.brightLevelBlue);
 
-        //Initilize Green Led
-        brightnessAmountGreen = (SeekBar) findViewById(R.id.brightnessAmountGreen);
-        brightLevelGreen = (TextView) findViewById(R.id.brightLevelGreen);
-        //Initlize Red Led
+        //Initilize Gripper head height
+        gripperHeightAmount = (SeekBar) findViewById(R.id.gripperHeightAmount);
+        gripperHeightControl = (TextView) findViewById(R.id.gripperHeightControl);
 
-        brightnessAmountRed = (SeekBar) findViewById(R.id.brightnessAmountRed);
-        brightLevelRed = (TextView) findViewById(R.id.brightLevelRed);
+        //Initilize arm extension servo bar
+        extendArmAmount = (SeekBar) findViewById(R.id.extendArmAmount);
+        armExtensionControl = (TextView) findViewById(R.id.armExtensionControl);
+
+        //Initilize Gripper Servo Bar
+        gripperAmount = (SeekBar) findViewById(R.id.gripperAmount);
+        gripperControl = (TextView) findViewById(R.id.gripperControl);
+
+        //Initilize rotation servo bar
+        rotationAmount = (SeekBar) findViewById(R.id.rotationAmount);
+        rotationControl = (TextView) findViewById(R.id.rotationControl);
 
         new ConnectBT().execute();
 
@@ -93,84 +102,109 @@ public class ledControl extends AppCompatActivity {
             }
         });
 
-        //Control slider of blue LED
-        brightnessAmountBlue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekbar, int progress, boolean fromUser) {
-                if (fromUser == true) {
-                    brightLevelBlue.setText(String.valueOf(progress));
-                    try {
-                        btSocket.getOutputStream().write(String.valueOf(progress).getBytes());
-                    } catch (IOException e) {
-                    }
-                }
-            }
+        //Control slider of gripper head height
+        gripperHeightAmount.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                                                           @Override
+                                                           public void onProgressChanged(SeekBar seekbar, int progress, boolean fromUser) {
+                                                               if (fromUser == true) {
+                                                                   p = progress;
+                                                                   // String pr = progress;
+                                                                   // Log.d(pr, "YourOutput");
+                                                                   gripperHeightControl.setText(String.valueOf(p));
+                                                                   try {
+                                                                       btSocket.getOutputStream().write(String.valueOf(p).getBytes());
+                                                                   } catch (IOException e) {
+                                                                   }
+                                                               }
+                                                           }
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekbar) {
-            }
+                                                           @Override
+                                                           public void onStartTrackingTouch(SeekBar seekbar) {
+                                                           }
 
-            @Override
-            public void onStopTrackingTouch(SeekBar seekbar) {
-            }
-        }
+                                                           @Override
+                                                           public void onStopTrackingTouch(SeekBar seekbar) {
+                                                           }
+                                                       }
         );
 
         //Control slider of green LED
-        brightnessAmountGreen.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-             @Override
-             public void onProgressChanged(SeekBar seekbar, int progress, boolean fromUser) {
-                 if (fromUser == true) {
-                     brightLevelGreen.setText(String.valueOf(progress));
-                     try {
-                         btSocket.getOutputStream().write(String.valueOf(progress).getBytes());
-                     } catch (IOException e) {
-                     }
-                 }
-             }
+        extendArmAmount.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                                                       @Override
+                                                       public void onProgressChanged(SeekBar seekbar, int progress, boolean fromUser) {
+                                                           if (fromUser == true) {
+                                                               armExtensionControl.setText(String.valueOf(progress));
+                                                               try {
+                                                                   btSocket.getOutputStream().write(String.valueOf(progress).getBytes());
+                                                               } catch (IOException e) {
+                                                               }
+                                                           }
+                                                       }
 
-             @Override
-             public void onStartTrackingTouch(SeekBar seekbar) {
-             }
+                                                       @Override
+                                                       public void onStartTrackingTouch(SeekBar seekbar) {
+                                                       }
 
-             @Override
-             public void onStopTrackingTouch(SeekBar seekbar) {
-             }
-         }
+                                                       @Override
+                                                       public void onStopTrackingTouch(SeekBar seekbar) {
+                                                       }
+                                                   }
         );
 
-        //Control slider of red LED
-        brightnessAmountRed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-           @Override
-           public void onProgressChanged(SeekBar seekbar, int progress, boolean fromUser) {
-               if (fromUser == true) {
-                   brightLevelRed.setText(String.valueOf(progress));
-                   try {
-                       btSocket.getOutputStream().write(String.valueOf(progress).getBytes());
-                   } catch (IOException e) {
-                   }
-               }
-           }
+        //Control slider of gripper arms
+        gripperAmount.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                                                     @Override
+                                                     public void onProgressChanged(SeekBar seekbar, int progress, boolean fromUser) {
+                                                         if (fromUser == true) {
+                                                             gripperControl.setText(String.valueOf(progress));
+                                                             try {
+                                                                 btSocket.getOutputStream().write(String.valueOf(progress).getBytes());
+                                                             } catch (IOException e) {
+                                                             }
+                                                         }
+                                                     }
 
-           @Override
-           public void onStartTrackingTouch(SeekBar seekbar) {
-           }
+                                                     @Override
+                                                     public void onStartTrackingTouch(SeekBar seekbar) {
+                                                     }
 
-           @Override
-           public void onStopTrackingTouch(SeekBar seekbar) {
-           }
-       }
+                                                     @Override
+                                                     public void onStopTrackingTouch(SeekBar seekbar) {
+                                                     }
+                                                 }
         );
 
 
+        //Control slider bot rotation
+        rotationAmount.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                                                      @Override
+                                                      public void onProgressChanged(SeekBar seekbar, int progres, boolean fromUser) {
+                                                          if (fromUser == true) {
+                                                              rotationControl.setText(String.valueOf(progress));
+                                                              try {
+                                                                  btSocket.getOutputStream().write(String.valueOf(progress).getBytes());
+                                                              } catch (IOException e) {
+                                                              }
+                                                          }
+                                                      }
 
+                                                      @Override
+                                                      public void onStartTrackingTouch(SeekBar seekbar) {
+                                                      }
+
+                                                      @Override
+                                                      public void onStopTrackingTouch(SeekBar seekbar) {
+                                                      }
+                                                  }
+        );
+
+    /*
         toJoystick.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 startActivity(new Intent(ledControl.this, JoyStickController.class));
             }
         });
-
-
+*/
 
 
     }
@@ -208,7 +242,7 @@ public class ledControl extends AppCompatActivity {
     }
 
     private void msg(String s) {
-        Toast.makeText(getApplicationContext(),s, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
     }
 
     private class ConnectBT extends AsyncTask<Void, Void, Void> { // UI thread
@@ -235,17 +269,17 @@ public class ledControl extends AppCompatActivity {
             return null;
         }
 
-            @Override
-            protected void onPostExecute (Void result){
-                super.onPostExecute(result);
-                if (!ConnectSuccess) {
-                    msg("Connection Failed. Try again.");
-                    finish();
-                } else {
-                    msg("Connected.");
-                    isBtConnected = true;
-                }
-                progress.dismiss();
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            if (!ConnectSuccess) {
+                msg("Connection Failed. Try again.");
+                finish();
+            } else {
+                msg("Connected.");
+                isBtConnected = true;
             }
+            progress.dismiss();
         }
     }
+}

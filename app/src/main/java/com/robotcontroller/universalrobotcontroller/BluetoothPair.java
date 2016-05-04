@@ -43,14 +43,14 @@ public class BluetoothPair extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        viewDevices = (Button)findViewById(R.id.DevicesView);
-        deviceList = (ListView)findViewById(R.id.listConnectedDevices);
+        viewDevices = (Button) findViewById(R.id.DevicesView);
+        deviceList = (ListView) findViewById(R.id.listConnectedDevices);
 
         BTAdapter = BluetoothAdapter.getDefaultAdapter();
 
         //Checks if device has a bluetooth module
-        if(BTAdapter == null) {
-           //if no module, tells user and then closes app
+        if (BTAdapter == null) {
+            //if no module, tells user and then closes app
             new AlertDialog.Builder(this)
                     .setTitle("Not Compatible")
                     .setMessage("Your device does not support Bluetooth")
@@ -62,10 +62,10 @@ public class BluetoothPair extends AppCompatActivity {
                     })
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
-        //if device has bluetooth, checks if it is enabled or not; if not ask to enable it
+            //if device has bluetooth, checks if it is enabled or not; if not ask to enable it
         } else if (!BTAdapter.isEnabled()) {
-                Intent blueToothOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivity(blueToothOn);
+            Intent blueToothOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivity(blueToothOn);
         }
 
         viewDevices.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +94,7 @@ public class BluetoothPair extends AppCompatActivity {
     }
 
     private AdapterView.OnItemClickListener myListClickListener = new AdapterView.OnItemClickListener() {
-        public void onItemClick (AdapterView av, View v, int arg2, long arg3) {
+        public void onItemClick(AdapterView av, View v, int arg2, long arg3) {
             //Retrive the MAC address of the device
             String info = ((TextView) v).getText().toString();
             String address = info.substring(info.length() - 17);
