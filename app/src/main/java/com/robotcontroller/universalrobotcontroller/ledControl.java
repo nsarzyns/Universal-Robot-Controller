@@ -198,14 +198,6 @@ public class ledControl extends AppCompatActivity {
                                                   }
         );
 
-    /*
-        toJoystick.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                startActivity(new Intent(ledControl.this, JoyStickController.class));
-            }
-        });
-*/
-
 
     }
 
